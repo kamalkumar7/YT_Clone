@@ -83,7 +83,7 @@ const SignIn = () => {
     e.preventDefault();
     dispatch(loginStart());
     try {
-      const res = await axios.post("/auth/signin", { name, password });
+      const res = await axios.post("https://random-ochre.vercel.app/api/auth/signin", { name, password });
       dispatch(loginSuccess(res.data));
       navigate("/")
     } catch (err) {
@@ -118,7 +118,7 @@ const SignIn = () => {
 
   const signupFun = async()=>
   {
-    axios.post("/auth/signup",{
+    axios.post("https://random-ochre.vercel.app/api/auth/signup",{
       name: name,
       email: email,
       password:password

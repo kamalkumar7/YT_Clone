@@ -145,11 +145,11 @@ const Video = () => {
 
 
   const handleLike = async () => {
-    await axios.put(`/users/like/${currentVideo._id}`);
+    await axios.put(`https://random-ochre.vercel.app/api/users/like/${currentVideo._id}`);
     dispatch(like(currentUser._id));
   };
   const handleDislike = async () => {
-    await axios.put(`/users/dislike/${currentVideo._id}`);
+    await axios.put(`https://random-ochre.vercel.app/api/users/dislike/${currentVideo._id}`);
     dispatch(dislike(currentUser._id));
   };
 
@@ -161,14 +161,14 @@ const Video = () => {
 
       
 
-        await axios.put(`/users/unsub/${channel._id}`).then(()=>{
+        await axios.put(`https://random-ochre.vercel.app/api/users/unsub/${channel._id}`).then(()=>{
           setSubNum(subNum-1);
         })
 
       
       : 
       
-      await axios.put(`/users/unsub/${channel._id}`).then(()=>{
+      await axios.put(`https://random-ochre.vercel.app/api/users/unsub/${channel._id}`).then(()=>{
         setSubNum(subNum+1);
       })
 
