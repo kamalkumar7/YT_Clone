@@ -17,7 +17,7 @@ const Home = ({type}) => {
       {
         type = 'random'
       }
-      const res = await axios.get(`/videos/${type}`);
+      const res = await axios.get(`https://random-ochre.vercel.app/api/videos/${type}`);
       setVideos(res.data);
     };
     fetchVideos();
