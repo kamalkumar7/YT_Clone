@@ -88,7 +88,7 @@ const Menu = ({ darkMode, setDarkMode }) => {
   return (
     <Container>
       <Wrapper>
-        <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
+        <Link to="/YT_Clone" style={{ textDecoration: "none", color: "inherit" }}>
           <Logo>
             <Img src={Loggo} />
             YouTube
@@ -98,14 +98,14 @@ const Menu = ({ darkMode, setDarkMode }) => {
           <HomeIcon />
           Home
         </Item>
-        <Link to="trends" style={{ textDecoration: "none", color: "inherit" }}>
+        <Link to="YT_Clone/trends" style={{ textDecoration: "none", color: "inherit" }}>
           <Item>
             <ExploreOutlinedIcon />
             Explore
           </Item>
         </Link>
         <Link
-          to="subscriptions"
+          to="YT_Clone/subscriptions"
           style={{ textDecoration: "none", color: "inherit" }}
         >
           <Item>
@@ -127,7 +127,7 @@ const Menu = ({ darkMode, setDarkMode }) => {
           <>
             <Login>
               Sign in  like, comment subscribe and upload videos.
-              <Link to="signin" style={{ textDecoration: "none" }}>
+              <Link to="YT_Clone/signin" style={{ textDecoration: "none" }}>
                 <Button>
                   <AccountCircleOutlinedIcon />
                   SIGN IN

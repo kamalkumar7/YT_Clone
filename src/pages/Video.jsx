@@ -120,7 +120,7 @@ const Video = () => {
   const { currentVideo } = useSelector((state) => state.video);
   const dispatch = useDispatch();
 
-  const path = useLocation().pathname.split("/")[2];
+  const path = useLocation().pathname.split("/")[3];
 
   const [channel, setChannel] = useState({});
   const [subNum,setSubNum] = useState(0);
@@ -128,9 +128,14 @@ const Video = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const videoRes = await axios.get(`/videos/find/${path}`);
+        const videoRes = await axios.get(`https://random-ochre.vercel.app/api/videos/find/${path}`);
         const channelRes = await axios.get(
-          `/users/find/${videoRes.data.userId}`
+          `https://random-ochre.vercel.app/api/users/find/${videoRes.data.userId}`,{},{
+            headers:{
+              "Conent-Type":"application/json"
+            },
+            withCredentials:true,
+                  }
         );
         setChannel(channelRes.data);
 
@@ -145,11 +150,22 @@ const Video = () => {
 
 
   const handleLike = async () => {
-    await axios.put(`https://random-ochre.vercel.app/api/users/like/${currentVideo._id}`);
+    await axios.put(`http://localhost:800/api/users/like/${currentVideo._id}`,{},{
+      headers:{
+        "Conent-Type":"application/json"
+      },
+      withCredentials:true,
+            });
+
     dispatch(like(currentUser._id));
   };
   const handleDislike = async () => {
-    await axios.put(`https://random-ochre.vercel.app/api/users/dislike/${currentVideo._id}`);
+    await axios.put(`http://localhost:800/api/users/dislike/${currentVideo._id}`,{},{
+      headers:{
+        "Conent-Type":"application/json"
+      },
+      withCredentials:true,
+            });
     dispatch(dislike(currentUser._id));
   };
 
@@ -163,14 +179,24 @@ const Video = () => {
 
         await axios.put(`https://random-ochre.vercel.app/api/users/unsub/${channel._id}`).then(()=>{
           setSubNum(subNum-1);
-        })
+        },{},{
+          headers:{
+            "Conent-Type":"application/json"
+          },
+          withCredentials:true,
+                })
 
       
       : 
       
       await axios.put(`https://random-ochre.vercel.app/api/users/unsub/${channel._id}`).then(()=>{
         setSubNum(subNum+1);
-      })
+      },{},{
+        headers:{
+          "Conent-Type":"application/json"
+        },
+        withCredentials:true,
+              })
 
      dispatch(subscription(channel._id));
   };
@@ -178,27 +204,29 @@ const Video = () => {
   //TODO: DELETE VIDEO FUNCTIONALITY
 
   return (
+    currentVideo
+    ?
     <Container>
       <Content>
         <VideoWrapper>
-          <VideoFrame src={currentVideo.videoUrl} controls />
+          <VideoFrame src={currentVideo?.videoUrl} controls />
         </VideoWrapper>
-        <Title>{currentVideo.title}</Title>
+        <Title>{currentVideo?.title}</Title>
         <Details>
           <Info>
-            {currentVideo.views} views • {(currentVideo.createdAt)}
+            {currentVideo?.views} views • {(currentVideo?.createdAt)}
           </Info>
           <Buttons>
             <Button onClick={handleLike}>
-              {currentVideo.likes?.includes(currentUser?._id) ? (
+              {currentVideo?.likes?.includes(currentUser?._id) ? (
                 <ThumbUpIcon />
               ) : (
                 <ThumbUpOutlinedIcon />
               )}{" "}
-              {currentVideo.likes?.length}
+              {currentVideo?.likes?.length}
             </Button>
             <Button onClick={handleDislike}>
-              {currentVideo.dislikes?.includes(currentUser?._id) ? (
+              {currentVideo?.dislikes?.includes(currentUser?._id) ? (
                 <ThumbDownIcon />
               ) : (
                 <ThumbDownOffAltOutlinedIcon />
@@ -234,6 +262,8 @@ const Video = () => {
       </Content>
       <Recommendation tags={currentVideo.tags} />
     </Container>
+
+    :null
   );
 };
 

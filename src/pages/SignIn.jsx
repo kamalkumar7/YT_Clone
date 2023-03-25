@@ -83,12 +83,27 @@ const SignIn = () => {
     e.preventDefault();
     dispatch(loginStart());
     try {
-      const res = await axios.post("https://random-ochre.vercel.app/api/auth/signin", { name, password });
+      console.log(name);
+      console.log(password);
+      const res = await axios.post("http://localhost:800/api/auth/signin", { name: name, password:password },{
+        headers:{
+          "Conent-Type":"application/json"
+        },
+        withCredentials:true,
+              });
       dispatch(loginSuccess(res.data));
-      navigate("/")
-    } catch (err) {
+      console.log(res);
+      navigate("/YT_Clone/")
+
+    } catch (err) 
+    {
+
+      console.log(name);
+      console.log(password);
       window.alert("Please signup first");
       dispatch(loginFailure());
+      console.log(err)
+    
     }
   };
 
@@ -104,11 +119,16 @@ const SignIn = () => {
             name: result.user.displayName,
             email: result.user.email,
             img: result.user.photoURL,
-          })
+          },{
+            headers:{
+              "Conent-Type":"application/json"
+            },
+            withCredentials:true,
+                  })
           .then((res) => {
             console.log(res)
             dispatch(loginSuccess(res.data));
-            navigate("/")
+            navigate("YT_Clone/")
           });
       })
       .catch((error) => {
@@ -122,6 +142,11 @@ const SignIn = () => {
       name: name,
       email: email,
       password:password
+    },{
+      headers:{
+        "Conent-Type":"application/json"
+      },
+      withCredentials:true,
     }).then((res)=>{
       console.log(res);
 
@@ -177,7 +202,7 @@ const SignIn = () => {
        
 
         <Title>or</Title>
-          <Button style={{backgroundColor:"red"}} onClick={signInWithGoogle}>Signin with Google</Button>
+          <Button style={{backgroundColor:"yellow"}} onClick={signInWithGoogle}>Signin with Google</Button>
 
         
 
