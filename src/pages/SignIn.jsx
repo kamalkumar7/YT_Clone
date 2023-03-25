@@ -128,7 +128,7 @@ const SignIn = () => {
           .then((res) => {
             console.log(res)
             dispatch(loginSuccess(res.data));
-            navigate("YT_Clone/")
+            navigate("/YT_Clone")
           });
       })
       .catch((error) => {
@@ -202,7 +202,7 @@ const SignIn = () => {
        
 
         <Title>or</Title>
-          <Button style={{backgroundColor:"yellow"}} onClick={signInWithGoogle}>Signin with Google</Button>
+          <Button style={{backgroundColor:"blue"}} onClick={signInWithGoogle}>Signin with Google</Button>
 
         
 
