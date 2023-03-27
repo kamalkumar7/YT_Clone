@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "/YT_Clone/static/js/main.9ee8519a.js",
+    "main.js": "/YT_Clone/static/js/main.98f44c4f.js",
     "index.html": "/YT_Clone/index.html",
-    "main.9ee8519a.js.map": "/YT_Clone/static/js/main.9ee8519a.js.map"
+    "main.98f44c4f.js.map": "/YT_Clone/static/js/main.98f44c4f.js.map"
   },
   "entrypoints": [
-    "static/js/main.9ee8519a.js"
+    "static/js/main.98f44c4f.js"
   ]
 }
