@@ -134,10 +134,18 @@ const Upload = ({ setOpen }) => {
   }, [img]);
 
   const handleUpload = async (e)=>{
+    console.log("upload");
     e.preventDefault();
-    const res = await axios.post("/videos", {...inputs, tags})
+    const res = await axios.post("http://localhost:800/api/videos", {...inputs, tags},{
+      headers:{
+        "Conent-Type":"application/json"
+      },
+      withCredentials:true,
+            })
+
     setOpen(false)
-    res.status===200 && navigate(`/video/${res.data._id}`)
+    
+    res.status===200 && navigate(`YT_Clone/video/${res.data._id}`)
   }
 
   return (
@@ -170,7 +178,7 @@ const Upload = ({ setOpen }) => {
         <Input
           type="text"
           placeholder="Separate the tags with commas."
-          onChange={handleTags}
+          onChance={handleTags}
         />
         <Label>Image:</Label>
         {imgPerc > 0 ? (

@@ -96,17 +96,20 @@ const Navbar = () => {
               placeholder="Search"
               onChange={(e) => setQ(e.target.value)}
             />
-            <SearchOutlinedIcon onClick={()=>navigate(`/search?q=${q}`)}/>
+            <SearchOutlinedIcon onClick={()=>navigate(`YT_Clone//search?q=${q}`)}/>
           </Search>
           {currentUser ? (
             <User>
-              <UploadFileOutlined onClick={() => setOpen(true)} /> 
+              <UploadFileOutlined onClick={() => {
+                console.log("clicked")
+                  setOpen(true);
+              }} /> 
               <Avatar src={currentUser.img} />
               {currentUser.name}
               <Button onClick={hadnleLogout}> SIGN OUT</Button>
             </User>
           ) : (
-            <Link to="signin" style={{ textDecoration: "none" }}>
+            <Link to="YT_Clone/signin" style={{ textDecoration: "none" }}>
               <Button>
                 <AccountCircleOutlinedIcon />
                 SIGN IN                

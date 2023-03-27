@@ -35,16 +35,15 @@ function App() {
             <Navbar />
             <Wrapper>
               <Routes>
-                <Route path="/">
+                <Route path="/YT_Clone">
+
                   <Route index element={<Home type="random" />} />
                   <Route path="trends" element={<Home type="trend" />} />
                   <Route path="subscriptions" element={<Home type="sub" />} />
                   <Route path="search" element={<Search />} />
-                  <Route
-                    path="signin"
-                    element={currentUser ? <Home /> : <SignIn />}
+                  <Route  path="signin" element={currentUser ? <Home /> : <SignIn />}
                   />
-                  <Route path="video">
+                  <Route path="/YT_Clone/video">
                     <Route path=":id" element={<Video />} />
                   </Route>
                 </Route>
