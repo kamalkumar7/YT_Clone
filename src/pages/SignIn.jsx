@@ -202,7 +202,7 @@ const SignIn = () => {
        
 
         <Title>or</Title>
-          <Button style={{backgroundColor:"blue"}} onClick={signInWithGoogle}>Signin with Google</Button>
+          <Button style={{backgroundColor:"green"}} onClick={signInWithGoogle}>Signin with Google</Button>
 
         
 
