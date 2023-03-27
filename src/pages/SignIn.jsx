@@ -83,8 +83,10 @@ const SignIn = () => {
     e.preventDefault();
     dispatch(loginStart());
     try {
-      const res = await axios.post("https://random-ochre.vercel.app/api/auth/signin", { name, password });
-      dispatch(loginSuccess(res.data));
+      const res = await axios.post("http://localhost:800/api/auth/signin", { name, password },{
+        withCredentials: true
+      });
+      dispatch(loginSuccess(res.data))
       navigate("/")
     } catch (err) {
       window.alert("Please signup first");
