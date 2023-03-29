@@ -1,11 +1,11 @@
 {
   "files": {
-    "main.js": "/YT_Clone/static/js/main.4037bdcb.js",
+    "main.js": "/YT_Clone/static/js/main.f7d5517a.js",
     "static/media/userimg.png": "/YT_Clone/static/media/userimg.73a0bc1f1a3d04cb02ec.png",
     "index.html": "/YT_Clone/index.html",
-    "main.4037bdcb.js.map": "/YT_Clone/static/js/main.4037bdcb.js.map"
+    "main.f7d5517a.js.map": "/YT_Clone/static/js/main.f7d5517a.js.map"
   },
   "entrypoints": [
-    "static/js/main.4037bdcb.js"
+    "static/js/main.f7d5517a.js"
   ]
 }
