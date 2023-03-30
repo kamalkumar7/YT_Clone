@@ -2,6 +2,8 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import ReactTimeago from "react-timeago";
+import IMG from '../img/userimg.png'
 
 const Container = styled.div`
   width: ${(props) => props.type !== "sm" && "360px"};
@@ -10,13 +12,16 @@ const Container = styled.div`
   display: ${(props) => props.type === "sm" && "flex"};
   gap: 10px;
   
+  
 `;
 
 const Image = styled.img`
   width: 100%;
   height: ${(props) => (props.type === "sm" ? "120px" : "202px")};
   background-color: #999;
+  border-radius: 15px ;
   flex: 1;
+  display:block
   border-radius:10px;
 `;
 
@@ -54,6 +59,8 @@ const Info = styled.div`
   color: ${({ theme }) => theme.textSoft};
 `;
 
+
+
 const Card = ({ type, video }) => {
   const [channel, setChannel] = useState({});
 
@@ -65,22 +72,37 @@ const Card = ({ type, video }) => {
     fetchChannel();
   }, [video.userId]);
 
+  if(channel)
+  {
+    if(!channel.img)
+    {
+      channel.img = IMG
+    }
+  }
+
+      
   return (
     <Link to={`/YT_Clone/video/${video._id}`} style={{ textDecoration: "none" }}>
       <Container type={type}>
+      
+     
+        
+
         <Image
           type={type}
           src={video.imgUrl}
-        />
+          
+          /> 
+           
         <Details type={type}>
           <ChannelImage
             type={type}
-            src={channel.img}
+            src={channel?.img}
           />
           <Texts>
             <Title>{video.title}</Title>
             <ChannelName>{channel.name}</ChannelName>
-            <Info>{video.views} views • {(video.createdAt)}</Info>
+            <Info>{video.views} views • {React.createElement(ReactTimeago, {date: video.createdAt})}</Info>
           </Texts>
         </Details>
       </Container>

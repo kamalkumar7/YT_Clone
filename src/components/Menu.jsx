@@ -19,10 +19,10 @@ import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 import SettingsBrightnessOutlinedIcon from "@mui/icons-material/SettingsBrightnessOutlined";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+// height: 100vh;
 const Container = styled.div`
   flex: 1;
   background-color: ${({ theme }) => theme.bgLighter};
-  height: 100vh;
   color: ${({ theme }) => theme.text};
   font-size: 14px;
   position: sticky;
@@ -163,6 +163,10 @@ const Menu = ({ darkMode, setDarkMode }) => {
           Live
         </Item>
         <Hr />
+        <Item onClick={() => setDarkMode(!darkMode)}>
+          <SettingsBrightnessOutlinedIcon />
+          {darkMode ? "Light" : "Dark"} Mode
+        </Item>
         <Item>
           <SettingsOutlinedIcon />
           Settings
@@ -175,10 +179,7 @@ const Menu = ({ darkMode, setDarkMode }) => {
           <HelpOutlineOutlinedIcon />
           Help
         </Item>
-        <Item onClick={() => setDarkMode(!darkMode)}>
-          <SettingsBrightnessOutlinedIcon />
-          {darkMode ? "Light" : "Dark"} Mode
-        </Item>
+        
       </Wrapper>
     </Container>
   );

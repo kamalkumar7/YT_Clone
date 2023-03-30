@@ -7,13 +7,22 @@ import AddTaskOutlinedIcon from "@mui/icons-material/AddTaskOutlined";
 import ThumbDownIcon from "@mui/icons-material/ThumbDown";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import Comments from "../components/Comments";
-import Card from "../components/Card";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import { dislike, fetchSuccess, like } from "../redux/videoSlice";
 import { subscription } from "../redux/userSlice";
 import Recommendation from "../components/Recommendation";
+import {
+
+  WhatsappShareButton,WhatsappIcon 
+  
+} from "react-share";
+
+
+import ReactTimeago from "react-timeago";
+import { DeleteOutline, Share } from "@mui/icons-material";
+import IMG from '../img/userimg3.svg'
 
 const Container = styled.div`
   display: flex;
@@ -128,20 +137,13 @@ const Video = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const videoRes = await axios.get(`https://random-ochre.vercel.app/api/videos/find/${path}`);
-        const channelRes = await axios.get(
-          `https://random-ochre.vercel.app/api/users/find/${videoRes.data.userId}`,{},{
-            headers:{
-              "Conent-Type":"application/json"
-            },
-            withCredentials:true,
-                  }
-        );
+        const videoRes = await axios.get(`http://localhost:800/api/videos/find/${path}`);
+        console.log(videoRes.data.userId);
+        const channelRes = await axios.get(`http://localhost:800/api/users/find/${videoRes.data.userId}`);
         setChannel(channelRes.data);
 
         dispatch(fetchSuccess(videoRes.data));
 
-        console.log(channel);
       } catch (err) {}
     };
     fetchData();
@@ -172,36 +174,56 @@ const Video = () => {
   
 
   const handleSub = async () => {
+
+    var coookie;
+    try{
+       coookie = document.cookie.split('{[')[1]
+    }catch(err)
+    {
+      console.log("cokkies not set");
+    }
+
+
     currentUser.subscribedUsers.includes(channel._id)
       ?
-
-      
-
-        await axios.put(`https://random-ochre.vercel.app/api/users/unsub/${channel._id}`).then(()=>{
-          setSubNum(subNum-1);
-        },{},{
-          headers:{
-            "Conent-Type":"application/json"
-          },
-          withCredentials:true,
-                })
-
-      
-      : 
-      
-      await axios.put(`https://random-ochre.vercel.app/api/users/unsub/${channel._id}`).then(()=>{
-        setSubNum(subNum+1);
-      },{},{
+        await axios.put("https://random-ochre.vercel.app/api/users/unsub", {"cookie":coookie},{
         headers:{
           "Conent-Type":"application/json"
         },
         withCredentials:true,
+              }).then(()=>{
+                setSubNum(subNum-1);
               })
+      
+      : 
+     
+        await axios.put("https://random-ochre.vercel.app/api/users/sub", {"cookie":coookie},{
+        headers:{
+          "Conent-Type":"application/json"
+        },
+        withCredentials:true,
+              }).then(()=>{
+                setSubNum(subNum-1);
+              })
+
+
 
      dispatch(subscription(channel._id));
   };
 
   //TODO: DELETE VIDEO FUNCTIONALITY
+
+  const deleteVideo = async()=>{
+    if (window.confirm("Delete?"))
+{ 
+  console.log("I am clicked")
+}
+  }
+
+  if(channel.img ===undefined)
+  {
+    channel.img = IMG;
+  }
 
   return (
     currentVideo
@@ -214,9 +236,17 @@ const Video = () => {
         <Title>{currentVideo?.title}</Title>
         <Details>
           <Info>
-            {currentVideo?.views} views • {(currentVideo?.createdAt)}
+            {currentVideo?.views} views • {React.createElement(ReactTimeago, {date: currentVideo?.createdAt})}
           </Info>
+ 
           <Buttons>
+                <WhatsappShareButton
+        url={`https://kamalkumar7.github.io/YT_Clone/video/${currentVideo._id}`}
+        quote={'Dummy text!'}
+        hashtag="#muo"
+      >
+        <WhatsappIcon size={32} round />
+      </WhatsappShareButton>
             <Button onClick={handleLike}>
               {currentVideo?.likes?.includes(currentUser?._id) ? (
                 <ThumbUpIcon />
@@ -233,13 +263,14 @@ const Video = () => {
               )}{" "}
               Dislike
             </Button>
-            <Button>
-              <ReplyOutlinedIcon /> Share
-            </Button>
-            <Button>
-              <AddTaskOutlinedIcon /> Save
+            
+
+              
+            <Button onClick={deleteVideo}>
+              {currentVideo.userId == currentUser?._id && <DeleteOutline/>}
             </Button>
           </Buttons>
+          
         </Details>
         <Hr />
         <Channel>

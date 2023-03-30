@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import styled from "styled-components";
+import NoVideo from "../components/NoVideo";
 import Card from "../components/Card";
 
 const Container = styled.div`
@@ -22,11 +23,21 @@ const Search = () => {
     fetchVideos();
   }, [query]);
 
-  return <Container>
+  if(videos.length===0)
+  {
+    return(
+      <NoVideo/>
+    )
+
+  }
+  return ( <Container>
     {videos.map(video=>(
       <Card key={video._id} video={video}/>
     ))}
-  </Container>;
+  </Container>
+  )
+  
+  ;
 };
 
 export default Search;

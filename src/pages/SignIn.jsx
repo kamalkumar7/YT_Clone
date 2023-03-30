@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { loginFailure, loginStart, loginSuccess } from "../redux/userSlice";
 import { auth, provider } from "../firebase";
 import { signInWithPopup } from "firebase/auth";
-import { async } from "@firebase/util";
+// import { async } from "@firebase/util";
 import { useNavigate } from "react-router-dom";
 const Container = styled.div`
   display: flex;
@@ -83,12 +83,13 @@ const SignIn = () => {
     e.preventDefault();
     dispatch(loginStart());
     try {
-      const res = await axios.post("http:localhost:800/api/auth/signin", { name, password },
-      {
-        withCredentials:true
-      });
+      const res = await axios.post("https://random-ochre.vercel.app/api/auth/signin", { name, password });
+
+
+      document.cookie = `access_token= {[${res.data.access_token}{[}`;
+      
       dispatch(loginSuccess(res.data));
-      navigate("/")
+      navigate("/YT_Clone")
     } catch (err) {
       window.alert("Please signup first");
       dispatch(loginFailure());
@@ -105,7 +106,7 @@ const SignIn = () => {
     signInWithPopup(auth, provider)
       .then((result) => {
         axios
-          .post("/auth/google", {
+          .post("https://random-ochre.vercel.app/api/auth/google", {
             name: result.user.displayName,
             email: result.user.email,
             img: result.user.photoURL,
@@ -116,9 +117,12 @@ const SignIn = () => {
             withCredentials:true,
                   })
           .then((res) => {
-            console.log(res)
+
+            document.cookie = `access_token= {[${res.data.access_token}{[}`;
             dispatch(loginSuccess(res.data));
+            
             navigate("/YT_Clone")
+
           });
       })
       .catch((error) => {
@@ -138,13 +142,11 @@ const SignIn = () => {
       },
       withCredentials:true,
     }).then((res)=>{
-      console.log(res);
 
       if(res.status===200)
       {
         console.log("user signed up")
         setsigned(true);
-
       }
 
     }).catch((Error)=>{
@@ -192,7 +194,7 @@ const SignIn = () => {
        
 
         <Title>or</Title>
-          <Button style={{backgroundColor:"green"}} onClick={signInWithGoogle}>Signin with Google</Button>
+          <Button style={{backgroundColor:"red"}} onClick={signInWithGoogle}>Signin with Google</Button>
 
         
 

@@ -134,9 +134,18 @@ const Upload = ({ setOpen }) => {
   }, [img]);
 
   const handleUpload = async (e)=>{
-    console.log("upload");
     e.preventDefault();
-    const res = await axios.post("http://localhost:800/api/videos", {...inputs, tags},{
+
+    var coookie;
+    try{
+       coookie = document.cookie.split('{[')[1]
+    }catch(err)
+    {
+      console.log("cokkies not set");
+    }
+
+
+    const res = await axios.post("https://random-ochre.vercel.app/api/videos", {...inputs, tags, "cookie":coookie},{
       headers:{
         "Conent-Type":"application/json"
       },
@@ -190,7 +199,7 @@ const Upload = ({ setOpen }) => {
             onChange={(e) => setImg(e.target.files[0])}
           />
         )}
-        <Button onClick={handleUpload}>Upload</Button>
+        <Button style={{color:'red'}} onClick={handleUpload}>Upload</Button>
       </Wrapper>
     </Container>
   );

@@ -5,9 +5,10 @@ import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector ,useDispatch} from "react-redux";
 import Upload from "./Upload";
-import { async } from "@firebase/util";
+// import { async } from "@firebase/util";
 import { logout } from "../redux/userSlice";
 import {  UploadFileOutlined } from "@mui/icons-material";
+import IMG from '../img/userimg.png'
 
 const Container = styled.div`
   position: sticky;
@@ -87,6 +88,14 @@ const Navbar = () => {
     console.log("Logged out");
     dispatch(logout());
   }
+
+  if(currentUser)
+  {
+    if(!currentUser.img)
+    {
+      currentUser.img =IMG
+    }
+  }
   return (
     <>
       <Container>
@@ -96,15 +105,15 @@ const Navbar = () => {
               placeholder="Search"
               onChange={(e) => setQ(e.target.value)}
             />
-            <SearchOutlinedIcon onClick={()=>navigate(`YT_Clone//search?q=${q}`)}/>
+            <SearchOutlinedIcon onClick={()=>navigate(`YT_Clone/search?q=${q}`)}/>
           </Search>
           {currentUser ? (
             <User>
-              <UploadFileOutlined onClick={() => {
-                console.log("clicked")
+              Upload
+              <UploadFileOutlined  style={{color:'red' ,cursor: 'pointer'}} onClick={() => {
                   setOpen(true);
               }} /> 
-              <Avatar src={currentUser.img} />
+              <Avatar src={currentUser?.img} />
               {currentUser.name}
               <Button onClick={hadnleLogout}> SIGN OUT</Button>
             </User>

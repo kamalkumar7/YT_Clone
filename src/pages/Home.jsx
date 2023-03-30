@@ -13,7 +13,7 @@ const Home = ({type}) => {
 
   useEffect(() => {
     const fetchVideos = async () => {
-      if(type==undefined)
+      if(type===undefined)
       {
         type = 'random'
       }
