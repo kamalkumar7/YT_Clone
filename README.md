@@ -10,11 +10,16 @@ FULL STACK YOUTUBE CLONE APP
 Made With:
 ![image](https://user-images.githubusercontent.com/78609121/228961201-a790fc49-3a05-4a35-8af6-25c10a4ed8eb.png)
 
-What you can do
+What you can do:
+
 1️⃣ Signup / Signin 
+
 2️⃣ Upload / Delete 
+
 3️⃣ Search a video
+
 4️⃣ Like Share and Comment
+
 5️⃣ Search by Tag
 
 
