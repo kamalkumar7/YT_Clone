@@ -23,11 +23,15 @@ What you can do:
 5️⃣ Search by Tag
 
 
+
+
 How to run Frontend
 
 👉 After cloning this repo do npm install in root directory
 
 👉 Then do npm start
+
+
 
 How to run backend of this WebApp
 
