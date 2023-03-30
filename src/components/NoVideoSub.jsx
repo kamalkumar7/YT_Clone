@@ -9,14 +9,14 @@ font-weight:400;
 font-size:30px;
 font-family: Arial;
 `
-const NoVideo = () => {
+const NoVideoSub = () => {
   return (
     <NV>
         <div className="message" style={{alignItems:'center', textAlign:'center'}}>
-        No Videos Found    
+        No Videos Found in Subscription 
         </div>    
     </NV>
   )
 }
 
-export default NoVideo
+export default NoVideoSub

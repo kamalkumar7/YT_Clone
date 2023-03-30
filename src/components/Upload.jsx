@@ -21,11 +21,13 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+
 `;
 
 const Wrapper = styled.div`
   width: 600px;
   height: 600px;
+  border-radius:15px;
   background-color: ${({ theme }) => theme.bgLighter};
   color: ${({ theme }) => theme.text};
   padding: 20px;
@@ -199,7 +201,7 @@ const Upload = ({ setOpen }) => {
             onChange={(e) => setImg(e.target.files[0])}
           />
         )}
-        <Button style={{color:'red'}} onClick={handleUpload}>Upload</Button>
+        <Button style={{color:'black', backgroundColor:'#0096D6'}} onClick={handleUpload}>Upload</Button>
       </Wrapper>
     </Container>
   );

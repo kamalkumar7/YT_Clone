@@ -2,17 +2,16 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
 import ThumbDownOffAltOutlinedIcon from "@mui/icons-material/ThumbDownOffAltOutlined";
-import ReplyOutlinedIcon from "@mui/icons-material/ReplyOutlined";
-import AddTaskOutlinedIcon from "@mui/icons-material/AddTaskOutlined";
 import ThumbDownIcon from "@mui/icons-material/ThumbDown";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import Comments from "../components/Comments";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
+import {  useLocation } from "react-router-dom";
 import axios from "axios";
 import { dislike, fetchSuccess, like } from "../redux/videoSlice";
 import { subscription } from "../redux/userSlice";
 import Recommendation from "../components/Recommendation";
+import { useNavigate } from "react-router-dom";
 import {
 
   WhatsappShareButton,WhatsappIcon 
@@ -21,7 +20,7 @@ import {
 
 
 import ReactTimeago from "react-timeago";
-import { DeleteOutline, Share } from "@mui/icons-material";
+import { DeleteOutline } from "@mui/icons-material";
 import IMG from '../img/userimg3.svg'
 
 const Container = styled.div`
@@ -32,7 +31,9 @@ const Container = styled.div`
 const Content = styled.div`
   flex: 5;
 `;
-const VideoWrapper = styled.div``;
+const VideoWrapper = styled.div`
+border-radius:15px;
+`;
 
 const Title = styled.h1`
   font-size: 18px;
@@ -81,8 +82,8 @@ const ChannelInfo = styled.div`
 `;
 
 const Image = styled.img`
-  width: 50px;
-  height: 50px;
+  width: 45px;
+  height: 45px;
   border-radius: 50%;
 `;
 
@@ -125,10 +126,11 @@ const VideoFrame = styled.video`
 `;
 
 const Video = () => {
+
   const { currentUser } = useSelector((state) => state.user);
   const { currentVideo } = useSelector((state) => state.video);
   const dispatch = useDispatch();
-
+  const navigate = useNavigate()
   const path = useLocation().pathname.split("/")[3];
 
   const [channel, setChannel] = useState({});
@@ -137,44 +139,105 @@ const Video = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const videoRes = await axios.get(`http://localhost:800/api/videos/find/${path}`);
-        console.log(videoRes.data.userId);
-        const channelRes = await axios.get(`http://localhost:800/api/users/find/${videoRes.data.userId}`);
-        setChannel(channelRes.data);
+        const videoRes = await axios.get(`https://random-ochre.vercel.app/api/videos/find/${path}`);
 
+        const channelRes = await axios.get(`https://random-ochre.vercel.app/api/users/find/${videoRes.data.userId}`);
+        setChannel(channelRes.data);
+        setTimeout(()=>{
+           axios.put(`https://random-ochre.vercel.app/api/videos/view/${currentVideo._id}`);
+
+        },50000)
+     
+        
         dispatch(fetchSuccess(videoRes.data));
 
       } catch (err) {}
     };
     fetchData();
-  }, [path, dispatch]);
+  }, [path, dispatch, currentVideo._id]);
 
 
 
   const handleLike = async () => {
-    await axios.put(`http://localhost:800/api/users/like/${currentVideo._id}`,{},{
-      headers:{
-        "Conent-Type":"application/json"
-      },
-      withCredentials:true,
-            });
+    
+    if(currentUser)
+    {
+      var coookie;
+      try{
+         coookie = document.cookie.split('{[')[1]
+      }catch(err)
+      {
+        console.log("cokkies not set");
+      }
+      await axios.put(`https://random-ochre.vercel.app/api/users/like/${currentVideo._id}`,{cookie:coookie}).then(()=>{
+  
+        dispatch(like(currentUser?._id));
+      })
 
-    dispatch(like(currentUser._id));
+    }else
+    {
+      window.alert("Please Signin to Like/Dislike")
+    }
+
   };
   const handleDislike = async () => {
-    await axios.put(`http://localhost:800/api/users/dislike/${currentVideo._id}`,{},{
-      headers:{
-        "Conent-Type":"application/json"
-      },
-      withCredentials:true,
-            });
-    dispatch(dislike(currentUser._id));
+    
+    if(currentUser)
+    {
+      var coookie;
+      try{
+         coookie = document.cookie.split('{[')[1]
+      }catch(err)
+      {
+        console.log("cokkies not set");
+      }
+      await axios.put(`https://random-ochre.vercel.app/api/users/dislike/${currentVideo._id}`,{cookie:coookie}).then(()=>{
+  
+        dispatch(dislike(currentUser?._id));
+      })
+
+    }else
+    {
+      window.alert("Please Signin to Like/Dislike")
+    }
+
+
   };
 
   
 
   const handleSub = async () => {
+    
+    if(currentUser)
+    {
+      var coookie;
+      try{
+         coookie = document.cookie.split('{[')[1]
+      }catch(err)
+      {
+        console.log("cokkies not set");
+      }
+  
+  
+      currentUser.subscribedUsers.includes(channel._id)
+        ?
+          await axios.put(`https://random-ochre.vercel.app/api/users/unsub/${channel._id}`,{cookie:coookie}).then(setSubNum(subNum-1))
+         
+        
+        : 
+       
+          await axios.put(`https://random-ochre.vercel.app/api/users/sub/${channel._id}`, {cookie:coookie}).then(setSubNum(subNum+1))     
+  
+       dispatch(subscription(channel._id));
+    }else{
+      window.alert("Please Signin to Subscribe")
+    }
 
+
+  };
+
+
+  const deleteVideo = async()=>{
     var coookie;
     try{
        coookie = document.cookie.split('{[')[1]
@@ -182,41 +245,11 @@ const Video = () => {
     {
       console.log("cokkies not set");
     }
-
-
-    currentUser.subscribedUsers.includes(channel._id)
-      ?
-        await axios.put("https://random-ochre.vercel.app/api/users/unsub", {"cookie":coookie},{
-        headers:{
-          "Conent-Type":"application/json"
-        },
-        withCredentials:true,
-              }).then(()=>{
-                setSubNum(subNum-1);
-              })
-      
-      : 
-     
-        await axios.put("https://random-ochre.vercel.app/api/users/sub", {"cookie":coookie},{
-        headers:{
-          "Conent-Type":"application/json"
-        },
-        withCredentials:true,
-              }).then(()=>{
-                setSubNum(subNum-1);
-              })
-
-
-
-     dispatch(subscription(channel._id));
-  };
-
-  //TODO: DELETE VIDEO FUNCTIONALITY
-
-  const deleteVideo = async()=>{
-    if (window.confirm("Delete?"))
+    if (window.confirm("You want to delete this video"))
 { 
-  console.log("I am clicked")
+  await axios.delete(`https://random-ochre.vercel.app/api/videos/${currentVideo._id}`, { data: { cookie:coookie } }).then(()=>{
+    navigate("/YT_Clone")
+  })
 }
   }
 
@@ -267,7 +300,7 @@ const Video = () => {
 
               
             <Button onClick={deleteVideo}>
-              {currentVideo.userId == currentUser?._id && <DeleteOutline/>}
+              {currentVideo.userId === currentUser?._id && <DeleteOutline/>}
             </Button>
           </Buttons>
           
@@ -293,7 +326,6 @@ const Video = () => {
       </Content>
       <Recommendation tags={currentVideo.tags} />
     </Container>
-
     :null
   );
 };

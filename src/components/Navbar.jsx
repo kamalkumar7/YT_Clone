@@ -89,12 +89,17 @@ const Navbar = () => {
     dispatch(logout());
   }
 
-  if(currentUser)
+  var imgLINK = currentUser?.img;
+  // if(currentUser)
+  // {
+  //   if(!currentUser.img)
+  //   {
+  //     currentUser.img =IMG
+  //   }
+  // }
+  if(imgLINK === undefined)
   {
-    if(!currentUser.img)
-    {
-      currentUser.img =IMG
-    }
+    imgLINK = IMG;
   }
   return (
     <>
@@ -113,7 +118,7 @@ const Navbar = () => {
               <UploadFileOutlined  style={{color:'red' ,cursor: 'pointer'}} onClick={() => {
                   setOpen(true);
               }} /> 
-              <Avatar src={currentUser?.img} />
+              <Avatar src={imgLINK} />
               {currentUser.name}
               <Button onClick={hadnleLogout}> SIGN OUT</Button>
             </User>

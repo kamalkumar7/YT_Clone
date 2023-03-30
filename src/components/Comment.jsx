@@ -53,7 +53,7 @@ const Comment = ({ comment, deletewithId }) => {
   useEffect(() => {
     const fetchComment = async () => {
       // console.log(comment.userId);
-      const res = await axios.get(`http://localhost:800/api/users/find/${comment.userId}`);
+      const res = await axios.get(`https://random-ochre.vercel.app/api/users/find/${comment.userId}`);
       setChannel(res.data)
     };
     fetchComment();
@@ -72,7 +72,7 @@ const Comment = ({ comment, deletewithId }) => {
 
     const idd = comment._id;
 
-    await axios.delete(`http://localhost:800/api/comments/${comment._id}`, { data: { cookie } }, {
+    await axios.delete(`https://random-ochre.vercel.app/api/comments/${comment._id}`, { data: { cookie } }, {
       headers: {
         "Conent-Type": "application/json"
 

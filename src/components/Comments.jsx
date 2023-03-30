@@ -38,7 +38,7 @@ const Comments = ({videoId}) => {
   useEffect(() => {
     const fetchComments = async () => {
       try {
-        const res = await axios.get(`http://localhost:800/api/comments/${videoId}`);
+        const res = await axios.get(`https://random-ochre.vercel.app/api/comments/${videoId}`);
         setComments(res.data);
       } catch (err) {}
     };
@@ -61,7 +61,7 @@ const Comments = ({videoId}) => {
   {
     console.log("cokkies not set");
   }
-  const res = await axios.post(`http://localhost:800/api/comments`,
+  const res = await axios.post(`https://random-ochre.vercel.app/api/comments`,
   {
     videoId:videoId,
     desc: comment,
@@ -75,7 +75,7 @@ const Comments = ({videoId}) => {
   }
   const handleChange = (e)=>{
     setComment(e.target.value);
-    console.log(comment);
+    // console.log(comment);
   }
 
   return (

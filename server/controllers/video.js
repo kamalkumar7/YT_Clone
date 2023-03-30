@@ -69,6 +69,7 @@ export const addView = async (req, res, next) => {
 };
 
 export const random = async (req, res, next) => {
+//   res.status(200).json("nice");
   try {
     const videos = await Video.aggregate([{ $sample: { size: 40 } }]);
     res.status(200).json(videos);
