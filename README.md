@@ -10,7 +10,7 @@ FULL STACK YOUTUBE CLONE APP
 Made With:
 ![image](https://user-images.githubusercontent.com/78609121/228961201-a790fc49-3a05-4a35-8af6-25c10a4ed8eb.png)
 
-What you can do:
+You can do:
 
 1️⃣ Signup / Signin 
 
@@ -33,7 +33,7 @@ How to run Frontend
 
 
 
-How to run backend of this WebApp
+How to run Backend
 
 👉 cd server
 
