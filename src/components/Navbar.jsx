@@ -85,18 +85,13 @@ const Navbar = () => {
   const { currentUser } = useSelector((state) => state.user);
 
   const hadnleLogout = async() =>{
-    console.log("Logged out");
+    // console.log("Logged out");
+    document.cookie = '';
     dispatch(logout());
   }
 
   var imgLINK = currentUser?.img;
-  // if(currentUser)
-  // {
-  //   if(!currentUser.img)
-  //   {
-  //     currentUser.img =IMG
-  //   }
-  // }
+
   if(imgLINK === undefined)
   {
     imgLINK = IMG;

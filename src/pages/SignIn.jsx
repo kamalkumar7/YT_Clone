@@ -83,7 +83,7 @@ const SignIn = () => {
     e.preventDefault();
     dispatch(loginStart());
     try {
-      const res = await axios.post("https://random-ochre.vercel.app/api/auth/signin", { name, password });
+      const res = await axios.post("https://random-ochre.vercel.app/api/auth/signin", { email, password });
 
 
       document.cookie = `access_token= {[${res.data.access_token}{[}`;
@@ -151,7 +151,7 @@ const SignIn = () => {
 
     }).catch((Error)=>{
       console.log("user exist")
-      window.alert("Username / Email already registered")
+      window.alert("Email already registered")
     })
   }
 
@@ -166,8 +166,8 @@ const SignIn = () => {
       <Title>Sign in</Title>
         <SubTitle>to continue to Youtube </SubTitle>
         <Input
-          placeholder="username"
-          onChange={(e) => setName(e.target.value)}
+          placeholder="email"
+          onChange={(e) => setEmail(e.target.value)}
         />
         <Input
           type="password"

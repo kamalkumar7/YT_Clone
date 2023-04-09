@@ -7,6 +7,12 @@ import SigninMessage from "../components/SigninMessage";
 import { useSelector } from "react-redux";
 import NoVideoSub from "../components/NoVideoSub";
 
+
+import NoVideo from "../components/NoVideo";
+
+
+
+
 const Container = styled.div`
   display: flex;
   justify-content: space-between;
@@ -16,10 +22,12 @@ const Container = styled.div`
 const Home = ({type}) => {
   const [videos, setVideos] = useState([]);
   const [authMessage, setauthMessage] = useState(false);
+
   const { currentUser } = useSelector((state) => state.user);
 
   useEffect(() => {
     const fetchVideos = async () => {
+
       if(type===undefined)
       {
         type = 'random'
@@ -56,16 +64,15 @@ const Home = ({type}) => {
   
                 setVideos(res.data);
               }else{
-                setauthMessage(true)
+                setauthMessage(false)
               }
          
 
 
             }  catch (error) 
             {
-              setauthMessage(true);
+              setauthMessage(false);
               setVideos([])
-              // console.log(error);
               
             }
         
@@ -81,28 +88,33 @@ const Home = ({type}) => {
               
             }
           }
-    
-
-          
-
 
       
     };
     fetchVideos();
-  }, [type,authMessage]);
+  }, [type,authMessage, videos.length]);
 
 
   return (
     <>
       {type === 'trend'?<TrendingHeader/>:null}
-      {authMessage && type==='sub'?<SigninMessage/>:null}
-      {videos.length===0 && authMessage===false && type==='sub' ? <NoVideoSub/>:null}
+      {!currentUser && type==='sub'?<SigninMessage/>:null}
+      {videos.length===0&& currentUser && type==='sub' ?   <NoVideoSub/>:null}
 
-    <Container>
-      {videos.map((video) => (
-        <Card key={video._id} video={video}/>
-        ))}
-    </Container>
+ 
+    {(videos.length&& type!=='sub' ) || (videos.length && authMessage===true && type==='sub' )  ? 
+        <Container>
+        {videos.map((video) => (
+          <Card key={video._id} video={video}/>
+          ))}
+      </Container>: 
+        
+
+    
+          <NoVideo home ={true}/>
+
+
+    }
     </>
   );
 };

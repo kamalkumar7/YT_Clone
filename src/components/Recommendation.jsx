@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Card from "./Card";
-
+import _ from 'lodash'
 const Container = styled.div`
   flex: 2;
 `;
@@ -13,7 +13,15 @@ const Recommendation = ({ tags }) => {
   useEffect(() => {
     const fetchVideos = async () => {
       const res = await axios.get(`https://random-ochre.vercel.app/api/videos/tags?tags=${tags}`);
-      setVideos(res.data);
+      if(_.isEmpty(res.data)) {
+        const random  = await axios.get('https://random-ochre.vercel.app/api/videos/random');
+
+        setVideos(random.data);
+      }else{
+
+        setVideos(res.data);
+      }
+   
     };
     fetchVideos();
   }, [tags]);

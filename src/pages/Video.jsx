@@ -141,10 +141,10 @@ const Video = () => {
       try {
         const videoRes = await axios.get(`https://random-ochre.vercel.app/api/videos/find/${path}`);
 
-        const channelRes = await axios.get(`https://random-ochre.vercel.app/api/users/find/${videoRes.data.userId}`);
+        const channelRes = await axios.get(`https://random-ochre.vercel.app/api/users/find/${videoRes?.data.userId}`);
         setChannel(channelRes.data);
         setTimeout(()=>{
-           axios.put(`https://random-ochre.vercel.app/api/videos/view/${currentVideo._id}`);
+           axios.put(`https://random-ochre.vercel.app/api/videos/view/${currentVideo?._id}`);
 
         },50000)
      
@@ -154,7 +154,7 @@ const Video = () => {
       } catch (err) {}
     };
     fetchData();
-  }, [path, dispatch, currentVideo._id]);
+  }, [path, dispatch, currentVideo?._id]);
 
 
 
@@ -169,7 +169,7 @@ const Video = () => {
       {
         console.log("cokkies not set");
       }
-      await axios.put(`https://random-ochre.vercel.app/api/users/like/${currentVideo._id}`,{cookie:coookie}).then(()=>{
+      await axios.put(`https://random-ochre.vercel.app/api/users/like/${currentVideo?._id}`,{cookie:coookie}).then(()=>{
   
         dispatch(like(currentUser?._id));
       })
@@ -191,7 +191,7 @@ const Video = () => {
       {
         console.log("cokkies not set");
       }
-      await axios.put(`https://random-ochre.vercel.app/api/users/dislike/${currentVideo._id}`,{cookie:coookie}).then(()=>{
+      await axios.put(`https://random-ochre.vercel.app/api/users/dislike/${currentVideo?._id}`,{cookie:coookie}).then(()=>{
   
         dispatch(dislike(currentUser?._id));
       })
@@ -219,16 +219,16 @@ const Video = () => {
       }
   
   
-      currentUser.subscribedUsers.includes(channel._id)
+      currentUser.subscribedUsers.includes(channel?._id)
         ?
-          await axios.put(`https://random-ochre.vercel.app/api/users/unsub/${channel._id}`,{cookie:coookie}).then(setSubNum(subNum-1))
+          await axios.put(`https://random-ochre.vercel.app/api/users/unsub/${channel?._id}`,{cookie:coookie}).then(setSubNum(subNum-1))
          
         
         : 
        
-          await axios.put(`https://random-ochre.vercel.app/api/users/sub/${channel._id}`, {cookie:coookie}).then(setSubNum(subNum+1))     
+          await axios.put(`https://random-ochre.vercel.app/api/users/sub/${channel?._id}`, {cookie:coookie}).then(setSubNum(subNum+1))     
   
-       dispatch(subscription(channel._id));
+       dispatch(subscription(channel?._id));
     }else{
       window.alert("Please Signin to Subscribe")
     }
@@ -247,7 +247,7 @@ const Video = () => {
     }
     if (window.confirm("You want to delete this video"))
 { 
-  await axios.delete(`https://random-ochre.vercel.app/api/videos/${currentVideo._id}`, { data: { cookie:coookie } }).then(()=>{
+  await axios.delete(`https://random-ochre.vercel.app/api/videos/${currentVideo?._id}`, { data: { cookie:coookie } }).then(()=>{
     navigate("/YT_Clone")
   })
 }
@@ -274,7 +274,7 @@ const Video = () => {
  
           <Buttons>
                 <WhatsappShareButton
-        url={`https://kamalkumar7.github.io/YT_Clone/video/${currentVideo._id}`}
+        url={`https://kamalkumar7.github.io/YT_Clone/video/${currentVideo?._id}`}
         quote={'Dummy text!'}
         hashtag="#muo"
       >
@@ -300,7 +300,7 @@ const Video = () => {
 
               
             <Button onClick={deleteVideo}>
-              {currentVideo.userId === currentUser?._id && <DeleteOutline/>}
+              {currentVideo?.userId === currentUser?._id && <DeleteOutline/>}
             </Button>
           </Buttons>
           
@@ -308,23 +308,23 @@ const Video = () => {
         <Hr />
         <Channel>
           <ChannelInfo>
-            <Image src={channel.img} />
+            <Image src={channel?.img} />
             <ChannelDetail>
-              <ChannelName>{channel.name}</ChannelName>
+              <ChannelName>{channel?.name}</ChannelName>
               <ChannelCounter>{subNum} subscribers</ChannelCounter>
               <Description>{currentVideo.desc}</Description>
             </ChannelDetail>
           </ChannelInfo>
           <Subscribe onClick={handleSub}>
-            {currentUser?.subscribedUsers?.includes(channel._id)
+            {currentUser?.subscribedUsers?.includes(channel?._id)
               ? "SUBSCRIBED"
               : "SUBSCRIBE"}
           </Subscribe>
         </Channel>
         <Hr />
-        <Comments videoId={currentVideo._id} />
+        <Comments videoId={currentVideo?._id} />
       </Content>
-      <Recommendation tags={currentVideo.tags} />
+      <Recommendation tags={currentVideo?.tags} />
     </Container>
     :null
   );

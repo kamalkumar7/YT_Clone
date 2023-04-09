@@ -135,7 +135,8 @@ const Upload = ({ setOpen }) => {
     img && uploadFile(img, "imgUrl");
   }, [img]);
 
-  const handleUpload = async (e)=>{
+  const handleUpload = async (e)=>
+  {
     e.preventDefault();
 
     var coookie;
