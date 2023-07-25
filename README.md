@@ -1,6 +1,6 @@
 
 FULL STACK YOUTUBE CLONE APP
-👉  [https://kamalkumar7.github.io/YT_Clone](https://yt-vercel.vercel.app/)        
+👉  [https://yt-vercel.vercel.app](https://yt-vercel.vercel.app/)        
 😊  Do SignUp to like, share, comment and Post 
 
 ![image](https://user-images.githubusercontent.com/78609121/228967524-0ac2ce44-850b-4cb0-bae3-df243f44dcf6.png)
