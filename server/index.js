@@ -10,7 +10,7 @@ import cors from 'cors';
 
 
 const app = express();
-app.use(cors({ origin: ['http://localhost:3000',"https://kamalkumar7.github.io"], credentials:true,            //access-control-allow-credentials:true
+app.use(cors({ origin: ['http://localhost:3000',"https://kamalkumar7.github.io, https://yt-vercel.vercel.app"], credentials:true,            //access-control-allow-credentials:true
 optionSuccessStatus:200}));
 dotenv.config();
 
